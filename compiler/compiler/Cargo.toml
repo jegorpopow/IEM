@@ -19,3 +19,4 @@ ast.path = "../ast"
 codegen.path = "../codegen"
 bytecode.path = "../bytecode"
 anyhow.workspace = true
+clap.workspace = true

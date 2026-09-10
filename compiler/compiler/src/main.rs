@@ -1,8 +1,4 @@
-use std::env;
-use std::fs;
-use std::fs::File;
-use std::io::Write;
-use std::path::Path;
+use std::{fs, fs::File, io::Write};
 
 use anyhow::Context;
 use ast::convert;
@@ -11,17 +7,15 @@ use codegen::compile;
 use lexer::Lexer;
 use parser::parse_program;
 
-// TODO: clap
-fn main() -> anyhow::Result<()> {
-    let mut args = env::args().skip(1);
-    let file = args.next().context("No file provided")?;
-    let out = match args.next() {
-        None => Path::new(&file).with_extension("obj"),
-        Some(out) => out.into(),
-    };
-    drop(args);
+use crate::cli::Cli;
 
-    let source = fs::read_to_string(&file).context("IO error: cannot read from input file")?;
+mod cli;
+
+fn main() -> anyhow::Result<()> {
+    let Cli { src, out } = Cli::parse();
+
+    let source: String =
+        fs::read_to_string(&src).context("IO error: cannot read from input file")?;
 
     let tokens: Vec<_> = Lexer::from(source.as_str()).collect();
     let program = parse_program(tokens).context("Parsing error")?;

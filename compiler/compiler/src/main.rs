@@ -11,6 +11,7 @@ use codegen::compile;
 use lexer::Lexer;
 use parser::parse_program;
 
+// TODO: clap
 fn main() -> anyhow::Result<()> {
     let mut args = env::args().skip(1);
     let file = args.next().context("No file provided")?;

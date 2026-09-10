@@ -290,6 +290,17 @@ dependencies = [
 ]
 
 [[package]]
+name = "interpret"
+version = "0.0.0"
+dependencies = [
+ "anyhow",
+ "ast",
+ "interpreter",
+ "lexer",
+ "parser",
+]
+
+[[package]]
 name = "interpreter"
 version = "0.0.0"
 dependencies = [

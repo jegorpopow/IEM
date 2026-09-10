@@ -9,6 +9,7 @@ fn parse_expr_from_line(str: &str) -> parser::FinalResult<Expression> {
     parser.finish(expr)
 }
 
+// TODO: make it interpret things, and not just parse them?
 fn main() -> io::Result<()> {
     let mut buffer = String::new();
     loop {

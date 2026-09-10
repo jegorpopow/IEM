@@ -11,7 +11,6 @@ use crate::cli::Cli;
 
 mod cli;
 
-// TODO: clap
 fn main() -> anyhow::Result<()> {
     let Cli { path } = Cli::parse();
 

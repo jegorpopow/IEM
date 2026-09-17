@@ -105,11 +105,16 @@ Program {
         Call {
             function_label: 4,
         },
-        Drop,
+        Drop(
+            1,
+        ),
         NullConst,
         Ret,
         Label {
             id: 1,
+        },
+        Begin {
+            function_id: 1,
         },
         Load {
             loc: Argument(
@@ -167,8 +172,12 @@ Program {
             ),
         },
         Ret,
+        Unreachable,
         Label {
             id: 2,
+        },
+        Begin {
+            function_id: 2,
         },
         AddressOf {
             loc: Argument(
@@ -278,13 +287,17 @@ Program {
             ),
         },
         Ret,
-        DropMany(
+        Drop(
             0,
         ),
         NullConst,
         Ret,
+        Unreachable,
         Label {
             id: 3,
+        },
+        Begin {
+            function_id: 3,
         },
         IntConst {
             value: 1,
@@ -372,7 +385,9 @@ Program {
         JumpNotZero {
             label: 6,
         },
-        Drop,
+        Drop(
+            1,
+        ),
         IntConst {
             value: 1,
         },
@@ -462,7 +477,9 @@ Program {
         JumpNotZero {
             label: 5,
         },
-        Drop,
+        Drop(
+            1,
+        ),
         IntConst {
             value: 3,
         },
@@ -549,14 +566,20 @@ Program {
             id: 5,
         },
         Ret,
+        Unreachable,
         Label {
             id: 4,
+        },
+        Begin {
+            function_id: 4,
+        },
+        IntConst {
+            value: 3,
         },
         AllocArray {
             type_id: TypeId(
                 5,
             ),
-            size: 3,
         },
         IntConst {
             value: 1,
@@ -715,10 +738,11 @@ Program {
                 2,
             ),
         },
-        DropMany(
+        Drop(
             1,
         ),
         NullConst,
         Ret,
+        Unreachable,
     ],
 }

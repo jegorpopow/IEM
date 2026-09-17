@@ -839,11 +839,16 @@ Program {
         Call {
             function_label: 36,
         },
-        Drop,
+        Drop(
+            1,
+        ),
         NullConst,
         Ret,
         Label {
             id: 1,
+        },
+        Begin {
+            function_id: 1,
         },
         Load {
             loc: Argument(
@@ -869,7 +874,7 @@ Program {
             ),
         },
         Ret,
-        DropMany(
+        Drop(
             0,
         ),
         Jump {
@@ -884,19 +889,23 @@ Program {
             ),
         },
         Ret,
-        DropMany(
+        Drop(
             0,
         ),
         Label {
             id: 38,
         },
-        DropMany(
+        Drop(
             0,
         ),
         NullConst,
         Ret,
+        Unreachable,
         Label {
             id: 2,
+        },
+        Begin {
+            function_id: 2,
         },
         Load {
             loc: Argument(
@@ -922,7 +931,7 @@ Program {
             ),
         },
         Ret,
-        DropMany(
+        Drop(
             0,
         ),
         Jump {
@@ -937,19 +946,23 @@ Program {
             ),
         },
         Ret,
-        DropMany(
+        Drop(
             0,
         ),
         Label {
             id: 40,
         },
-        DropMany(
+        Drop(
             0,
         ),
         NullConst,
         Ret,
+        Unreachable,
         Label {
             id: 3,
+        },
+        Begin {
+            function_id: 3,
         },
         Load {
             loc: Argument(
@@ -967,8 +980,12 @@ Program {
             ),
         },
         Ret,
+        Unreachable,
         Label {
             id: 4,
+        },
+        Begin {
+            function_id: 4,
         },
         Load {
             loc: Argument(
@@ -1026,8 +1043,12 @@ Program {
             ),
         },
         Ret,
+        Unreachable,
         Label {
             id: 5,
+        },
+        Begin {
+            function_id: 5,
         },
         Load {
             loc: Argument(
@@ -1074,8 +1095,12 @@ Program {
             ),
         },
         Ret,
+        Unreachable,
         Label {
             id: 6,
+        },
+        Begin {
+            function_id: 6,
         },
         Load {
             loc: Argument(
@@ -1128,7 +1153,7 @@ Program {
                 0,
             ),
         },
-        DropMany(
+        Drop(
             0,
         ),
         Label {
@@ -1140,13 +1165,17 @@ Program {
             ),
         },
         Ret,
-        DropMany(
+        Drop(
             1,
         ),
         NullConst,
         Ret,
+        Unreachable,
         Label {
             id: 7,
+        },
+        Begin {
+            function_id: 7,
         },
         Load {
             loc: Argument(
@@ -1168,7 +1197,7 @@ Program {
             value: NaN,
         },
         Ret,
-        DropMany(
+        Drop(
             0,
         ),
         Label {
@@ -1212,7 +1241,7 @@ Program {
                 0,
             ),
         },
-        DropMany(
+        Drop(
             0,
         ),
         Label {
@@ -1288,7 +1317,9 @@ Program {
         JumpNotZero {
             label: 47,
         },
-        Drop,
+        Drop(
+            1,
+        ),
         Load {
             loc: Local(
                 0,
@@ -1324,13 +1355,13 @@ Program {
             ),
         },
         Ret,
-        DropMany(
+        Drop(
             0,
         ),
         Label {
             id: 46,
         },
-        DropMany(
+        Drop(
             1,
         ),
         Load {
@@ -1370,20 +1401,26 @@ Program {
         JumpNotZero {
             label: 44,
         },
-        Drop,
+        Drop(
+            1,
+        ),
         Load {
             loc: Local(
                 0,
             ),
         },
         Ret,
-        DropMany(
+        Drop(
             1,
         ),
         NullConst,
         Ret,
+        Unreachable,
         Label {
             id: 8,
+        },
+        Begin {
+            function_id: 8,
         },
         AllocRecord {
             type_id: TypeId(
@@ -1422,9 +1459,13 @@ Program {
         },
         StoreAddress,
         Ret,
+        Unreachable,
         Label {
             id: 9,
         },
+        Begin {
+            function_id: 9,
+        },
         AllocRecord {
             type_id: TypeId(
                 4,
@@ -1516,9 +1557,13 @@ Program {
         },
         StoreAddress,
         Ret,
+        Unreachable,
         Label {
             id: 10,
         },
+        Begin {
+            function_id: 10,
+        },
         AllocRecord {
             type_id: TypeId(
                 4,
@@ -1610,9 +1655,13 @@ Program {
         },
         StoreAddress,
         Ret,
+        Unreachable,
         Label {
             id: 11,
         },
+        Begin {
+            function_id: 11,
+        },
         AllocRecord {
             type_id: TypeId(
                 4,
@@ -1692,8 +1741,12 @@ Program {
         },
         StoreAddress,
         Ret,
+        Unreachable,
         Label {
             id: 12,
+        },
+        Begin {
+            function_id: 12,
         },
         AddressOf {
             loc: Argument(
@@ -1775,8 +1828,12 @@ Program {
             ),
         },
         Ret,
+        Unreachable,
         Label {
             id: 13,
+        },
+        Begin {
+            function_id: 13,
         },
         Load {
             loc: Argument(
@@ -1795,8 +1852,12 @@ Program {
             function_label: 7,
         },
         Ret,
+        Unreachable,
         Label {
             id: 14,
+        },
+        Begin {
+            function_id: 14,
         },
         IntConst {
             value: 1,
@@ -1824,8 +1885,12 @@ Program {
             function_label: 11,
         },
         Ret,
+        Unreachable,
         Label {
             id: 15,
+        },
+        Begin {
+            function_id: 15,
         },
         AllocRecord {
             type_id: TypeId(
@@ -1865,8 +1930,12 @@ Program {
         },
         StoreAddress,
         Ret,
+        Unreachable,
         Label {
             id: 16,
+        },
+        Begin {
+            function_id: 16,
         },
         AddressOf {
             loc: Argument(
@@ -1898,8 +1967,12 @@ Program {
             function_label: 9,
         },
         Ret,
+        Unreachable,
         Label {
             id: 17,
+        },
+        Begin {
+            function_id: 17,
         },
         Load {
             loc: Argument(
@@ -1918,7 +1991,9 @@ Program {
         JumpZero {
             label: 49,
         },
-        Drop,
+        Drop(
+            1,
+        ),
         Load {
             loc: Argument(
                 0,
@@ -1946,7 +2021,7 @@ Program {
             line: 125,
             column: 2,
         },
-        DropMany(
+        Drop(
             0,
         ),
         Label {
@@ -1958,13 +2033,17 @@ Program {
             ),
         },
         Ret,
-        DropMany(
+        Drop(
             0,
         ),
         NullConst,
         Ret,
+        Unreachable,
         Label {
             id: 18,
+        },
+        Begin {
+            function_id: 18,
         },
         AllocRecord {
             type_id: TypeId(
@@ -2012,8 +2091,12 @@ Program {
         },
         StoreAddress,
         Ret,
+        Unreachable,
         Label {
             id: 19,
+        },
+        Begin {
+            function_id: 19,
         },
         AddressOf {
             loc: Argument(
@@ -2112,8 +2195,12 @@ Program {
             function_label: 18,
         },
         Ret,
+        Unreachable,
         Label {
             id: 20,
+        },
+        Begin {
+            function_id: 20,
         },
         AddressOf {
             loc: Argument(
@@ -2163,8 +2250,12 @@ Program {
         ElementAddress,
         LoadAddress,
         Ret,
+        Unreachable,
         Label {
             id: 21,
+        },
+        Begin {
+            function_id: 21,
         },
         AddressOf {
             loc: Argument(
@@ -2218,13 +2309,17 @@ Program {
             ),
         },
         StoreAddress,
-        DropMany(
+        Drop(
             0,
         ),
         NullConst,
         Ret,
+        Unreachable,
         Label {
             id: 22,
+        },
+        Begin {
+            function_id: 22,
         },
         AllocRecord {
             type_id: TypeId(
@@ -2251,7 +2346,7 @@ Program {
                 Mul,
             ),
         },
-        AllocArrayDynamic {
+        AllocArray {
             type_id: TypeId(
                 6,
             ),
@@ -2318,8 +2413,10 @@ Program {
         Call {
             function_label: 21,
         },
-        Drop,
-        DropMany(
+        Drop(
+            1,
+        ),
+        Drop(
             0,
         ),
         Load {
@@ -2373,8 +2470,10 @@ Program {
         JumpNotZero {
             label: 52,
         },
-        Drop,
-        DropMany(
+        Drop(
+            1,
+        ),
+        Drop(
             0,
         ),
         Load {
@@ -2428,20 +2527,26 @@ Program {
         JumpNotZero {
             label: 50,
         },
-        Drop,
+        Drop(
+            1,
+        ),
         Load {
             loc: Local(
                 0,
             ),
         },
         Ret,
-        DropMany(
+        Drop(
             1,
         ),
         NullConst,
         Ret,
+        Unreachable,
         Label {
             id: 23,
+        },
+        Begin {
+            function_id: 23,
         },
         AddressOf {
             loc: Argument(
@@ -2526,7 +2631,7 @@ Program {
                 6,
             ),
         },
-        DropMany(
+        Drop(
             0,
         ),
         Load {
@@ -2580,8 +2685,10 @@ Program {
         JumpNotZero {
             label: 56,
         },
-        Drop,
-        DropMany(
+        Drop(
+            1,
+        ),
+        Drop(
             0,
         ),
         Load {
@@ -2621,14 +2728,20 @@ Program {
         JumpNotZero {
             label: 54,
         },
-        Drop,
-        DropMany(
+        Drop(
+            1,
+        ),
+        Drop(
             0,
         ),
         NullConst,
         Ret,
+        Unreachable,
         Label {
             id: 24,
+        },
+        Begin {
+            function_id: 24,
         },
         AllocRecord {
             type_id: TypeId(
@@ -2661,8 +2774,12 @@ Program {
         NullConst,
         StoreAddress,
         Ret,
+        Unreachable,
         Label {
             id: 25,
+        },
+        Begin {
+            function_id: 25,
         },
         AllocRecord {
             type_id: TypeId(
@@ -2695,8 +2812,12 @@ Program {
         },
         StoreAddress,
         Ret,
+        Unreachable,
         Label {
             id: 26,
+        },
+        Begin {
+            function_id: 26,
         },
         AddressOf {
             loc: Argument(
@@ -2898,7 +3019,7 @@ Program {
             value: NaN,
         },
         Ret,
-        DropMany(
+        Drop(
             0,
         ),
         Label {
@@ -3023,7 +3144,7 @@ Program {
             function_label: 1,
         },
         Ret,
-        DropMany(
+        Drop(
             0,
         ),
         Jump {
@@ -3071,7 +3192,7 @@ Program {
             function_label: 2,
         },
         Ret,
-        DropMany(
+        Drop(
             0,
         ),
         Jump {
@@ -3084,25 +3205,29 @@ Program {
             value: NaN,
         },
         Ret,
-        DropMany(
+        Drop(
             0,
         ),
         Label {
             id: 62,
         },
-        DropMany(
+        Drop(
             0,
         ),
         Label {
             id: 60,
         },
-        DropMany(
+        Drop(
             6,
         ),
         NullConst,
         Ret,
+        Unreachable,
         Label {
             id: 27,
+        },
+        Begin {
+            function_id: 27,
         },
         AddressOf {
             loc: Argument(
@@ -3139,7 +3264,7 @@ Program {
             value: NaN,
         },
         Ret,
-        DropMany(
+        Drop(
             0,
         ),
         Label {
@@ -3228,7 +3353,7 @@ Program {
             ),
         },
         Ret,
-        DropMany(
+        Drop(
             0,
         ),
         Jump {
@@ -3241,19 +3366,23 @@ Program {
             value: NaN,
         },
         Ret,
-        DropMany(
+        Drop(
             0,
         ),
         Label {
             id: 65,
         },
-        DropMany(
+        Drop(
             1,
         ),
         NullConst,
         Ret,
+        Unreachable,
         Label {
             id: 28,
+        },
+        Begin {
+            function_id: 28,
         },
         AddressOf {
             loc: Argument(
@@ -3293,7 +3422,7 @@ Program {
             function_label: 26,
         },
         Ret,
-        DropMany(
+        Drop(
             0,
         ),
         Label {
@@ -3337,7 +3466,7 @@ Program {
             function_label: 27,
         },
         Ret,
-        DropMany(
+        Drop(
             0,
         ),
         Label {
@@ -3347,13 +3476,17 @@ Program {
             value: NaN,
         },
         Ret,
-        DropMany(
+        Drop(
             0,
         ),
         NullConst,
         Ret,
+        Unreachable,
         Label {
             id: 29,
+        },
+        Begin {
+            function_id: 29,
         },
         Load {
             loc: Argument(
@@ -3376,8 +3509,12 @@ Program {
             function_label: 14,
         },
         Ret,
+        Unreachable,
         Label {
             id: 30,
+        },
+        Begin {
+            function_id: 30,
         },
         AddressOf {
             loc: Argument(
@@ -3389,8 +3526,12 @@ Program {
         },
         LoadAddress,
         Ret,
+        Unreachable,
         Label {
             id: 31,
+        },
+        Begin {
+            function_id: 31,
         },
         AddressOf {
             loc: Argument(
@@ -3430,7 +3571,7 @@ Program {
             function_label: 29,
         },
         Ret,
-        DropMany(
+        Drop(
             0,
         ),
         Label {
@@ -3474,7 +3615,7 @@ Program {
             function_label: 30,
         },
         Ret,
-        DropMany(
+        Drop(
             0,
         ),
         Label {
@@ -3482,13 +3623,17 @@ Program {
         },
         NullConst,
         Ret,
-        DropMany(
+        Drop(
             0,
         ),
         NullConst,
         Ret,
+        Unreachable,
         Label {
             id: 32,
+        },
+        Begin {
+            function_id: 32,
         },
         AddressOf {
             loc: Argument(
@@ -3523,7 +3668,7 @@ Program {
         },
         LoadAddress,
         Ret,
-        DropMany(
+        Drop(
             0,
         ),
         Label {
@@ -3562,7 +3707,7 @@ Program {
         },
         LoadAddress,
         Ret,
-        DropMany(
+        Drop(
             0,
         ),
         Label {
@@ -3570,13 +3715,17 @@ Program {
         },
         NullConst,
         Ret,
-        DropMany(
+        Drop(
             0,
         ),
         NullConst,
         Ret,
+        Unreachable,
         Label {
             id: 33,
+        },
+        Begin {
+            function_id: 33,
         },
         AllocRecord {
             type_id: TypeId(
@@ -3599,8 +3748,12 @@ Program {
         NullConst,
         StoreAddress,
         Ret,
+        Unreachable,
         Label {
             id: 34,
+        },
+        Begin {
+            function_id: 34,
         },
         Call {
             function_label: 33,
@@ -3660,7 +3813,9 @@ Program {
         JumpZero {
             label: 75,
         },
-        Drop,
+        Drop(
+            1,
+        ),
         AddressOf {
             loc: Local(
                 0,
@@ -3677,7 +3832,9 @@ Program {
         JumpNotZero {
             label: 76,
         },
-        Drop,
+        Drop(
+            1,
+        ),
         AddressOf {
             loc: Local(
                 0,
@@ -3747,13 +3904,13 @@ Program {
                 0,
             ),
         },
-        DropMany(
+        Drop(
             0,
         ),
         Label {
             id: 74,
         },
-        DropMany(
+        Drop(
             1,
         ),
         Load {
@@ -3796,7 +3953,7 @@ Program {
         JumpNotZero {
             label: 72,
         },
-        DropMany(
+        Drop(
             2,
         ),
         Load {
@@ -3805,13 +3962,17 @@ Program {
             ),
         },
         Ret,
-        DropMany(
+        Drop(
             1,
         ),
         NullConst,
         Ret,
+        Unreachable,
         Label {
             id: 35,
+        },
+        Begin {
+            function_id: 35,
         },
         Load {
             loc: Argument(
@@ -4189,7 +4350,7 @@ Program {
                 12,
             ),
         },
-        DropMany(
+        Drop(
             0,
         ),
         Label {
@@ -4260,14 +4421,16 @@ Program {
         Call {
             function_label: 21,
         },
-        Drop,
-        DropMany(
+        Drop(
+            1,
+        ),
+        Drop(
             2,
         ),
         Label {
             id: 81,
         },
-        DropMany(
+        Drop(
             3,
         ),
         Load {
@@ -4321,8 +4484,10 @@ Program {
         JumpNotZero {
             label: 79,
         },
-        Drop,
-        DropMany(
+        Drop(
+            1,
+        ),
+        Drop(
             0,
         ),
         Load {
@@ -4376,20 +4541,26 @@ Program {
         JumpNotZero {
             label: 77,
         },
-        Drop,
+        Drop(
+            1,
+        ),
         Load {
             loc: Local(
                 0,
             ),
         },
         Ret,
-        DropMany(
+        Drop(
             7,
         ),
         NullConst,
         Ret,
+        Unreachable,
         Label {
             id: 36,
+        },
+        Begin {
+            function_id: 36,
         },
         AllocRecord {
             type_id: TypeId(
@@ -4530,11 +4701,13 @@ Program {
             ),
         },
         StoreAddress,
+        IntConst {
+            value: 3,
+        },
         AllocArray {
             type_id: TypeId(
                 14,
             ),
-            size: 3,
         },
         IntConst {
             value: 1,
@@ -4607,11 +4780,14 @@ Program {
         Call {
             function_label: 23,
         },
-        Drop,
-        DropMany(
+        Drop(
+            1,
+        ),
+        Drop(
             4,
         ),
         NullConst,
         Ret,
+        Unreachable,
     ],
 }

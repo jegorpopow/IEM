@@ -39,11 +39,16 @@ Program {
         Call {
             function_label: 2,
         },
-        Drop,
+        Drop(
+            1,
+        ),
         NullConst,
         Ret,
         Label {
             id: 1,
+        },
+        Begin {
+            function_id: 1,
         },
         Load {
             loc: Argument(
@@ -59,8 +64,12 @@ Program {
             ),
         },
         Ret,
+        Unreachable,
         Label {
             id: 2,
+        },
+        Begin {
+            function_id: 2,
         },
         RealConst {
             value: 10.0,
@@ -83,10 +92,11 @@ Program {
                 3,
             ),
         },
-        DropMany(
+        Drop(
             2,
         ),
         NullConst,
         Ret,
+        Unreachable,
     ],
 }

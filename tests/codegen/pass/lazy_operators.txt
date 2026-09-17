@@ -43,11 +43,16 @@ Program {
         Call {
             function_label: 3,
         },
-        Drop,
+        Drop(
+            1,
+        ),
         NullConst,
         Ret,
         Label {
             id: 1,
+        },
+        Begin {
+            function_id: 1,
         },
         IntConst {
             value: 0,
@@ -68,13 +73,17 @@ Program {
             ),
         },
         Ret,
-        DropMany(
+        Drop(
             1,
         ),
         NullConst,
         Ret,
+        Unreachable,
         Label {
             id: 2,
+        },
+        Begin {
+            function_id: 2,
         },
         IntConst {
             value: 1,
@@ -95,13 +104,17 @@ Program {
             ),
         },
         Ret,
-        DropMany(
+        Drop(
             1,
         ),
         NullConst,
         Ret,
+        Unreachable,
         Label {
             id: 3,
+        },
+        Begin {
+            function_id: 3,
         },
         IntConst {
             value: 0,
@@ -118,7 +131,9 @@ Program {
         JumpZero {
             label: 4,
         },
-        Drop,
+        Drop(
+            1,
+        ),
         Call {
             function_label: 1,
         },
@@ -145,7 +160,9 @@ Program {
         JumpZero {
             label: 5,
         },
-        Drop,
+        Drop(
+            1,
+        ),
         Call {
             function_label: 2,
         },
@@ -172,7 +189,9 @@ Program {
         JumpNotZero {
             label: 6,
         },
-        Drop,
+        Drop(
+            1,
+        ),
         Call {
             function_label: 1,
         },
@@ -199,7 +218,9 @@ Program {
         JumpNotZero {
             label: 7,
         },
-        Drop,
+        Drop(
+            1,
+        ),
         Call {
             function_label: 2,
         },
@@ -259,10 +280,11 @@ Program {
                 2,
             ),
         },
-        DropMany(
+        Drop(
             0,
         ),
         NullConst,
         Ret,
+        Unreachable,
     ],
 }

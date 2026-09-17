@@ -47,19 +47,28 @@ Program {
         Call {
             function_label: 2,
         },
-        Drop,
+        Drop(
+            1,
+        ),
         NullConst,
         Ret,
         Label {
             id: 1,
         },
-        DropMany(
+        Begin {
+            function_id: 1,
+        },
+        Drop(
             0,
         ),
         NullConst,
         Ret,
+        Unreachable,
         Label {
             id: 2,
+        },
+        Begin {
+            function_id: 2,
         },
         IntConst {
             value: 0,
@@ -88,7 +97,7 @@ Program {
             line: 10,
             column: 4,
         },
-        DropMany(
+        Drop(
             0,
         ),
         Label {
@@ -121,7 +130,7 @@ Program {
             line: 13,
             column: 4,
         },
-        DropMany(
+        Drop(
             0,
         ),
         Label {
@@ -154,7 +163,7 @@ Program {
             line: 16,
             column: 4,
         },
-        DropMany(
+        Drop(
             0,
         ),
         Label {
@@ -183,7 +192,7 @@ Program {
             line: 19,
             column: 4,
         },
-        DropMany(
+        Drop(
             0,
         ),
         Label {
@@ -212,7 +221,7 @@ Program {
             line: 22,
             column: 4,
         },
-        DropMany(
+        Drop(
             0,
         ),
         Label {
@@ -245,7 +254,7 @@ Program {
             line: 25,
             column: 4,
         },
-        DropMany(
+        Drop(
             0,
         ),
         Label {
@@ -274,7 +283,7 @@ Program {
             line: 28,
             column: 4,
         },
-        DropMany(
+        Drop(
             0,
         ),
         Label {
@@ -317,7 +326,7 @@ Program {
             line: 31,
             column: 4,
         },
-        DropMany(
+        Drop(
             0,
         ),
         Label {
@@ -348,16 +357,17 @@ Program {
             line: 34,
             column: 4,
         },
-        DropMany(
+        Drop(
             0,
         ),
         Label {
             id: 11,
         },
-        DropMany(
+        Drop(
             8,
         ),
         NullConst,
         Ret,
+        Unreachable,
     ],
 }

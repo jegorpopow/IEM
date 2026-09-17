@@ -39,11 +39,16 @@ Program {
         Call {
             function_label: 2,
         },
-        Drop,
+        Drop(
+            1,
+        ),
         NullConst,
         Ret,
         Label {
             id: 1,
+        },
+        Begin {
+            function_id: 1,
         },
         Load {
             loc: Argument(
@@ -65,7 +70,7 @@ Program {
             value: 1,
         },
         Ret,
-        DropMany(
+        Drop(
             0,
         ),
         Jump {
@@ -112,19 +117,23 @@ Program {
             ),
         },
         Ret,
-        DropMany(
+        Drop(
             0,
         ),
         Label {
             id: 4,
         },
-        DropMany(
+        Drop(
             0,
         ),
         NullConst,
         Ret,
+        Unreachable,
         Label {
             id: 2,
+        },
+        Begin {
+            function_id: 2,
         },
         IntConst {
             value: 10,
@@ -137,10 +146,11 @@ Program {
                 1,
             ),
         },
-        DropMany(
+        Drop(
             0,
         ),
         NullConst,
         Ret,
+        Unreachable,
     ],
 }

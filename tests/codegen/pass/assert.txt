@@ -27,11 +27,16 @@ Program {
         Call {
             function_label: 1,
         },
-        Drop,
+        Drop(
+            1,
+        ),
         NullConst,
         Ret,
         Label {
             id: 1,
+        },
+        Begin {
+            function_id: 1,
         },
         IntConst {
             value: 1,
@@ -47,7 +52,7 @@ Program {
             line: 2,
             column: 1,
         },
-        DropMany(
+        Drop(
             0,
         ),
         Label {
@@ -68,7 +73,7 @@ Program {
             line: 3,
             column: 1,
         },
-        DropMany(
+        Drop(
             0,
         ),
         Label {
@@ -104,16 +109,17 @@ Program {
             line: 4,
             column: 1,
         },
-        DropMany(
+        Drop(
             0,
         ),
         Label {
             id: 4,
         },
-        DropMany(
+        Drop(
             0,
         ),
         NullConst,
         Ret,
+        Unreachable,
     ],
 }

@@ -58,11 +58,16 @@ Program {
         Call {
             function_label: 3,
         },
-        Drop,
+        Drop(
+            1,
+        ),
         NullConst,
         Ret,
         Label {
             id: 1,
+        },
+        Begin {
+            function_id: 1,
         },
         Load {
             loc: Argument(
@@ -75,13 +80,17 @@ Program {
                 1,
             ),
         },
-        DropMany(
+        Drop(
             0,
         ),
         NullConst,
         Ret,
+        Unreachable,
         Label {
             id: 2,
+        },
+        Begin {
+            function_id: 2,
         },
         Load {
             loc: Argument(
@@ -107,7 +116,7 @@ Program {
             line: 6,
             column: 1,
         },
-        DropMany(
+        Drop(
             0,
         ),
         Label {
@@ -133,7 +142,7 @@ Program {
             value: 1,
         },
         Ret,
-        DropMany(
+        Drop(
             0,
         ),
         Jump {
@@ -169,19 +178,23 @@ Program {
             ),
         },
         Ret,
-        DropMany(
+        Drop(
             0,
         ),
         Label {
             id: 6,
         },
-        DropMany(
+        Drop(
             0,
         ),
         NullConst,
         Ret,
+        Unreachable,
         Label {
             id: 3,
+        },
+        Begin {
+            function_id: 3,
         },
         IntConst {
             value: 5,
@@ -189,7 +202,7 @@ Program {
         Call {
             function_label: 2,
         },
-        AllocArrayDynamic {
+        AllocArray {
             type_id: TypeId(
                 1,
             ),
@@ -197,11 +210,13 @@ Program {
         Call {
             function_label: 1,
         },
-        Drop,
+        Drop(
+            1,
+        ),
         IntConst {
             value: 0,
         },
-        AllocArrayDynamic {
+        AllocArray {
             type_id: TypeId(
                 1,
             ),
@@ -209,11 +224,14 @@ Program {
         Call {
             function_label: 1,
         },
-        Drop,
-        DropMany(
+        Drop(
+            1,
+        ),
+        Drop(
             0,
         ),
         NullConst,
         Ret,
+        Unreachable,
     ],
 }

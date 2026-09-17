@@ -27,11 +27,16 @@ Program {
         Call {
             function_label: 1,
         },
-        Drop,
+        Drop(
+            1,
+        ),
         NullConst,
         Ret,
         Label {
             id: 1,
+        },
+        Begin {
+            function_id: 1,
         },
         IntConst {
             value: 1,
@@ -126,7 +131,7 @@ Program {
                 1,
             ),
         },
-        DropMany(
+        Drop(
             0,
         ),
         Jump {
@@ -159,19 +164,19 @@ Program {
                 1,
             ),
         },
-        DropMany(
+        Drop(
             0,
         ),
         Label {
             id: 6,
         },
-        DropMany(
+        Drop(
             0,
         ),
         Label {
             id: 5,
         },
-        DropMany(
+        Drop(
             0,
         ),
         Jump {
@@ -204,7 +209,7 @@ Program {
                 1,
             ),
         },
-        DropMany(
+        Drop(
             0,
         ),
         Jump {
@@ -237,19 +242,19 @@ Program {
                 1,
             ),
         },
-        DropMany(
+        Drop(
             0,
         ),
         Label {
             id: 10,
         },
-        DropMany(
+        Drop(
             0,
         ),
         Label {
             id: 9,
         },
-        DropMany(
+        Drop(
             0,
         ),
         Label {
@@ -351,7 +356,7 @@ Program {
                 1,
             ),
         },
-        DropMany(
+        Drop(
             0,
         ),
         Jump {
@@ -368,13 +373,13 @@ Program {
                 1,
             ),
         },
-        DropMany(
+        Drop(
             0,
         ),
         Label {
             id: 15,
         },
-        DropMany(
+        Drop(
             0,
         ),
         Jump {
@@ -391,13 +396,13 @@ Program {
                 1,
             ),
         },
-        DropMany(
+        Drop(
             0,
         ),
         Label {
             id: 16,
         },
-        DropMany(
+        Drop(
             0,
         ),
         Jump {
@@ -414,13 +419,13 @@ Program {
                 1,
             ),
         },
-        DropMany(
+        Drop(
             0,
         ),
         Label {
             id: 17,
         },
-        DropMany(
+        Drop(
             0,
         ),
         Jump {
@@ -453,7 +458,7 @@ Program {
                 1,
             ),
         },
-        DropMany(
+        Drop(
             0,
         ),
         Jump {
@@ -486,25 +491,25 @@ Program {
                 1,
             ),
         },
-        DropMany(
+        Drop(
             0,
         ),
         Label {
             id: 21,
         },
-        DropMany(
+        Drop(
             0,
         ),
         Label {
             id: 20,
         },
-        DropMany(
+        Drop(
             0,
         ),
         Label {
             id: 18,
         },
-        DropMany(
+        Drop(
             0,
         ),
         Jump {
@@ -537,7 +542,7 @@ Program {
                 1,
             ),
         },
-        DropMany(
+        Drop(
             0,
         ),
         Jump {
@@ -570,28 +575,29 @@ Program {
                 1,
             ),
         },
-        DropMany(
+        Drop(
             0,
         ),
         Label {
             id: 25,
         },
-        DropMany(
+        Drop(
             0,
         ),
         Label {
             id: 24,
         },
-        DropMany(
+        Drop(
             0,
         ),
         Label {
             id: 22,
         },
-        DropMany(
+        Drop(
             7,
         ),
         NullConst,
         Ret,
+        Unreachable,
     ],
 }

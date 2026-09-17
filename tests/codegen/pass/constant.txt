@@ -65,11 +65,16 @@ Program {
         Call {
             function_label: 3,
         },
-        Drop,
+        Drop(
+            1,
+        ),
         NullConst,
         Ret,
         Label {
             id: 1,
+        },
+        Begin {
+            function_id: 1,
         },
         IntConst {
             value: 1,
@@ -82,13 +87,17 @@ Program {
         ElementAddress,
         LoadAddress,
         Ret,
-        DropMany(
+        Drop(
             0,
         ),
         NullConst,
         Ret,
+        Unreachable,
         Label {
             id: 2,
+        },
+        Begin {
+            function_id: 2,
         },
         IntConst {
             value: 100,
@@ -132,30 +141,40 @@ Program {
         ElementAddress,
         LoadAddress,
         Ret,
-        DropMany(
+        Drop(
             0,
         ),
         NullConst,
         Ret,
+        Unreachable,
         Label {
             id: 3,
         },
-        AllocArray {
-            type_id: TypeId(
-                5,
-            ),
-            size: 20000,
+        Begin {
+            function_id: 3,
+        },
+        IntConst {
+            value: 20000,
         },
         AllocArray {
             type_id: TypeId(
                 5,
             ),
-            size: 20000,
+        },
+        IntConst {
+            value: 20000,
+        },
+        AllocArray {
+            type_id: TypeId(
+                5,
+            ),
         },
         Call {
             function_label: 2,
         },
-        Drop,
+        Drop(
+            1,
+        ),
         IntConst {
             value: 1,
         },
@@ -201,7 +220,7 @@ Program {
                 1,
             ),
         },
-        DropMany(
+        Drop(
             0,
         ),
         Label {
@@ -215,10 +234,11 @@ Program {
                 1,
             ),
         },
-        DropMany(
+        Drop(
             1,
         ),
         NullConst,
         Ret,
+        Unreachable,
     ],
 }

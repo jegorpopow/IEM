@@ -68,11 +68,16 @@ Program {
         Call {
             function_label: 2,
         },
-        Drop,
+        Drop(
+            1,
+        ),
         NullConst,
         Ret,
         Label {
             id: 1,
+        },
+        Begin {
+            function_id: 1,
         },
         Load {
             loc: Argument(
@@ -99,19 +104,25 @@ Program {
                 3,
             ),
         },
-        DropMany(
+        Drop(
             0,
         ),
         NullConst,
         Ret,
+        Unreachable,
         Label {
             id: 2,
+        },
+        Begin {
+            function_id: 2,
+        },
+        IntConst {
+            value: 5,
         },
         AllocArray {
             type_id: TypeId(
                 6,
             ),
-            size: 5,
         },
         AllocRecord {
             type_id: TypeId(
@@ -141,11 +152,14 @@ Program {
         Call {
             function_label: 1,
         },
-        Drop,
-        DropMany(
+        Drop(
+            1,
+        ),
+        Drop(
             2,
         ),
         NullConst,
         Ret,
+        Unreachable,
     ],
 }

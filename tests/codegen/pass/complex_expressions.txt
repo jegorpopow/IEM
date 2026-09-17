@@ -39,11 +39,16 @@ Program {
         Call {
             function_label: 2,
         },
-        Drop,
+        Drop(
+            1,
+        ),
         NullConst,
         Ret,
         Label {
             id: 1,
+        },
+        Begin {
+            function_id: 1,
         },
         Load {
             loc: Argument(
@@ -59,13 +64,17 @@ Program {
             ),
         },
         Ret,
-        DropMany(
+        Drop(
             0,
         ),
         NullConst,
         Ret,
+        Unreachable,
         Label {
             id: 2,
+        },
+        Begin {
+            function_id: 2,
         },
         IntConst {
             value: 2,
@@ -171,7 +180,9 @@ Program {
         JumpZero {
             label: 3,
         },
-        Drop,
+        Drop(
+            1,
+        ),
         IntConst {
             value: 3,
         },
@@ -316,7 +327,9 @@ Program {
         JumpZero {
             label: 4,
         },
-        Drop,
+        Drop(
+            1,
+        ),
         Load {
             loc: Local(
                 1,
@@ -359,7 +372,9 @@ Program {
         JumpNotZero {
             label: 5,
         },
-        Drop,
+        Drop(
+            1,
+        ),
         Load {
             loc: Local(
                 1,
@@ -406,10 +421,11 @@ Program {
                 2,
             ),
         },
-        DropMany(
+        Drop(
             3,
         ),
         NullConst,
         Ret,
+        Unreachable,
     ],
 }

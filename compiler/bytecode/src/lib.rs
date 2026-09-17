@@ -84,7 +84,11 @@ impl ToByteCode for Instruction {
     fn to_bytecode(&self) -> Bytecode {
         let zero = Bytecode::default();
         match self {
-            Instruction::Drop => Bytecode { opcode: 1, ..zero },
+            Instruction::Drop(n) => Bytecode {
+                opcode: 1,
+                arg16: n.to_le_bytes(),
+                ..zero
+            },
             Instruction::Dup => Bytecode { opcode: 2, ..zero },
             Instruction::Swap => Bytecode { opcode: 3, ..zero },
 
@@ -114,24 +118,9 @@ impl ToByteCode for Instruction {
                 ..zero
             },
 
-            Instruction::NullConst => Bytecode { opcode: 28, ..zero },
-
-            Instruction::DropMany(n) => Bytecode {
-                opcode: 29,
-                arg16: n.to_le_bytes(),
-                ..zero
-            },
+            Instruction::NullConst => Bytecode { opcode: 11, ..zero },
 
             Instruction::Load { loc } => {
-                let (subopcode, arg16) = loc.to_bytecode();
-                Bytecode {
-                    opcode: 11,
-                    subopcode,
-                    arg16,
-                    ..zero
-                }
-            }
-            Instruction::Store { loc } => {
                 let (subopcode, arg16) = loc.to_bytecode();
                 Bytecode {
                     opcode: 12,
@@ -140,7 +129,7 @@ impl ToByteCode for Instruction {
                     ..zero
                 }
             }
-            Instruction::AddressOf { loc } => {
+            Instruction::Store { loc } => {
                 let (subopcode, arg16) = loc.to_bytecode();
                 Bytecode {
                     opcode: 13,
@@ -149,75 +138,88 @@ impl ToByteCode for Instruction {
                     ..zero
                 }
             }
-            Instruction::StoreAddress => Bytecode { opcode: 14, ..zero },
-            Instruction::LoadAddress => Bytecode { opcode: 15, ..zero },
+            Instruction::AddressOf { loc } => {
+                let (subopcode, arg16) = loc.to_bytecode();
+                Bytecode {
+                    opcode: 14,
+                    subopcode,
+                    arg16,
+                    ..zero
+                }
+            }
+
+            Instruction::StoreAddress => Bytecode { opcode: 15, ..zero },
+            Instruction::LoadAddress => Bytecode { opcode: 16, ..zero },
+
             Instruction::AllocRecord { type_id, size } => Bytecode {
-                opcode: 16,
-                arg32: type_id.to_bytecode(),
-                arg64: size.to_le_bytes(),
-                ..zero
-            },
-            Instruction::AllocArray { type_id, size } => Bytecode {
                 opcode: 17,
                 arg32: type_id.to_bytecode(),
                 arg64: size.to_le_bytes(),
                 ..zero
             },
-            Instruction::AllocArrayDynamic { type_id } => Bytecode {
-                opcode: 30,
+            Instruction::AllocArray { type_id } => Bytecode {
+                opcode: 18,
                 arg32: type_id.to_bytecode(),
                 ..zero
             },
-            Instruction::ArraySize => Bytecode { opcode: 18, ..zero },
-            Instruction::ElementAddress => Bytecode { opcode: 19, ..zero },
+
+            Instruction::ArraySize => Bytecode { opcode: 19, ..zero },
+            Instruction::ElementAddress => Bytecode { opcode: 20, ..zero },
+
             Instruction::FieldAddress { field_offset } => Bytecode {
-                opcode: 20,
+                opcode: 21,
                 arg64: field_offset.to_le_bytes(),
                 ..zero
             },
-
             Instruction::Label { id } => Bytecode {
-                opcode: 21,
+                opcode: 22,
                 arg64: id.to_le_bytes(),
                 ..zero
             },
             Instruction::Jump { label } => Bytecode {
-                opcode: 22,
+                opcode: 23,
                 arg64: label.to_le_bytes(),
                 ..zero
             },
             Instruction::JumpZero { label } => Bytecode {
-                opcode: 23,
+                opcode: 24,
                 subopcode: 0,
                 arg64: label.to_le_bytes(),
                 ..zero
             },
             Instruction::JumpNotZero { label } => Bytecode {
-                opcode: 23,
+                opcode: 24,
                 subopcode: 1,
                 arg64: label.to_le_bytes(),
                 ..zero
             },
-
             Instruction::Call { function_label } => Bytecode {
-                opcode: 24,
+                opcode: 25,
                 arg64: function_label.to_le_bytes(),
                 ..zero
             },
-            Instruction::Ret => Bytecode { opcode: 25, ..zero },
+
+            Instruction::Ret => Bytecode { opcode: 26, ..zero },
 
             Instruction::Print { type_id } => Bytecode {
-                opcode: 26,
+                opcode: 27,
                 arg32: type_id.to_bytecode(),
                 ..zero
             },
             Instruction::Panic { code, line, column } => Bytecode {
-                opcode: 27,
+                opcode: 28,
                 arg64: code.to_le_bytes(),
                 arg32: line.to_le_bytes(),
                 arg16: column.to_le_bytes(),
                 ..zero
             },
+            Instruction::Begin { function_id } => Bytecode {
+                opcode: 29,
+                arg32: function_id.to_le_bytes(),
+                ..zero
+            },
+
+            Instruction::Unreachable => Bytecode { opcode: 30, ..zero },
         }
     }
 }

@@ -51,32 +51,49 @@ Program {
         Call {
             function_label: 4,
         },
-        Drop,
+        Drop(
+            1,
+        ),
         NullConst,
         Ret,
         Label {
             id: 1,
         },
+        Begin {
+            function_id: 1,
+        },
         IntConst {
             value: 3,
         },
         Ret,
+        Unreachable,
         Label {
             id: 2,
+        },
+        Begin {
+            function_id: 2,
         },
         IntConst {
             value: 4,
         },
         Ret,
+        Unreachable,
         Label {
             id: 3,
+        },
+        Begin {
+            function_id: 3,
         },
         IntConst {
             value: 5,
         },
         Ret,
+        Unreachable,
         Label {
             id: 4,
+        },
+        Begin {
+            function_id: 4,
         },
         IntConst {
             value: 5,
@@ -93,7 +110,9 @@ Program {
         JumpZero {
             label: 5,
         },
-        Drop,
+        Drop(
+            1,
+        ),
         IntConst {
             value: 4,
         },
@@ -120,7 +139,9 @@ Program {
         JumpZero {
             label: 7,
         },
-        Drop,
+        Drop(
+            1,
+        ),
         IntConst {
             value: 0,
         },
@@ -131,7 +152,9 @@ Program {
         JumpNotZero {
             label: 6,
         },
-        Drop,
+        Drop(
+            1,
+        ),
         IntConst {
             value: 1,
         },
@@ -238,7 +261,9 @@ Program {
         JumpZero {
             label: 9,
         },
-        Drop,
+        Drop(
+            1,
+        ),
         IntConst {
             value: 2,
         },
@@ -257,7 +282,9 @@ Program {
         JumpNotZero {
             label: 8,
         },
-        Drop,
+        Drop(
+            1,
+        ),
         IntConst {
             value: 1,
         },
@@ -297,10 +324,11 @@ Program {
                 1,
             ),
         },
-        DropMany(
+        Drop(
             0,
         ),
         NullConst,
         Ret,
+        Unreachable,
     ],
 }

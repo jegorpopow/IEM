@@ -1,7 +1,4 @@
-use std::{
-    collections::{BTreeMap, HashMap},
-    rc::Rc,
-};
+use std::{collections::BTreeMap, rc::Rc};
 
 use ast::{
     BinaryOperator, Binding, Bindings, Block, BoolBinOp, Decl, Expression, Literal,
@@ -17,6 +14,9 @@ pub use crate::rtti::{ArrayRepresentation, RecordRepresentation, Representation,
 mod rtti;
 #[cfg(test)]
 mod tests;
+
+type FunctionId = u32;
+type Label = u64;
 
 #[derive(Debug, Clone, Copy)]
 pub enum Instruction {
@@ -45,9 +45,7 @@ pub enum Instruction {
     /// duplicate stack top
     Dup,
     /// drop stack top
-    Drop,
-    // drop n elements from stack
-    DropMany(VarLoc),
+    Drop(VarLoc),
     /// swaps top and second elements of stack
     Swap,
     /// apply binary operator to stack top
@@ -68,12 +66,8 @@ pub enum Instruction {
         type_id: TypeId,
         size: u64,
     },
-    /// allocate an array, push a reference to stack
+    /// allocate an array which length is the stack top, push a reference to stack
     AllocArray {
-        type_id: TypeId,
-        size: u64,
-    }, // TODO: add TypeId ?
-    AllocArrayDynamic {
         type_id: TypeId,
     },
     /// pop array ref from stack, push its size
@@ -86,25 +80,25 @@ pub enum Instruction {
     },
     /// no-op
     Label {
-        id: u64,
+        id: Label,
     },
     /// non-conditional jump
     Jump {
-        label: u64,
+        label: Label,
     },
     /// conditional jump
     JumpZero {
-        label: u64,
+        label: Label,
     },
     /// conditional jump
     JumpNotZero {
-        label: u64,
+        label: Label,
     },
     /// leave function, the stack top is a return value
     Ret,
     /// call specified function
     Call {
-        function_label: u64,
+        function_label: Label,
     },
     /// Print a stack top and drop it
     Print {
@@ -119,6 +113,10 @@ pub enum Instruction {
     IntToBool, // All of it may be just a built-in call
     RealToInt, // All of it may be just a built-in call
     IntToReal, // All of it may be just a built-in call
+    Begin {
+        function_id: FunctionId,
+    },
+    Unreachable,
 }
 
 #[derive(Debug)]
@@ -144,14 +142,22 @@ pub struct Program {
 }
 
 #[derive(Debug)]
+struct RoutineMeta {
+    id: FunctionId,
+    entry: u64,
+    args: Vec<TypeId>,
+    result: TypeId,
+}
+
+#[derive(Debug)]
 struct Compiler<'a> {
     bindings: &'a Bindings,
     interner: Interner,
     bytecode: Vec<Instruction>,
     global_init: Vec<Instruction>,
     fresh_label_counter: u64,
-    routines_labels: BTreeMap<Identifier, u64>,
-    routine_meta: HashMap<u64, (Vec<TypeId>, TypeId)>,
+    fresh_routine_counter: u32,
+    routine_meta: BTreeMap<Identifier, RoutineMeta>,
     global_count: usize,
 }
 
@@ -164,8 +170,8 @@ impl<'a> Compiler<'a> {
             bytecode: Vec::new(),
             global_init: Vec::new(),
             fresh_label_counter: 0,
-            routines_labels: BTreeMap::new(),
-            routine_meta: HashMap::new(),
+            fresh_routine_counter: 1, // 0 is reserved for global init
+            routine_meta: BTreeMap::new(),
             global_count: 0,
         };
 
@@ -185,6 +191,12 @@ impl<'a> Compiler<'a> {
     fn get_fresh_label(&mut self) -> u64 {
         let result = self.fresh_label_counter;
         self.fresh_label_counter += 1;
+        result
+    }
+
+    fn get_fresh_function_id(&mut self) -> FunctionId {
+        let result = self.fresh_routine_counter;
+        self.fresh_routine_counter += 1;
         result
     }
 
@@ -247,12 +259,12 @@ impl<'a> Compiler<'a> {
                     unreachable!()
                 };
                 let type_id = self.get_type_representation(t);
-                self.bytecode.push(Instruction::AllocArray {
-                    type_id,
-                    size: length
+                self.bytecode.push(Instruction::IntConst {
+                    value: length
                         .try_into()
                         .expect("Internal compiler error, too long array"),
-                })
+                });
+                self.bytecode.push(Instruction::AllocArray { type_id })
             }
         }
     }
@@ -260,8 +272,7 @@ impl<'a> Compiler<'a> {
     fn compile_new_array(&mut self, element_type: &Rc<Type>, length: &Rc<Expression>) {
         self.compile_expr(length);
         let type_id = self.get_type_representation(element_type);
-        self.bytecode
-            .push(Instruction::AllocArrayDynamic { type_id });
+        self.bytecode.push(Instruction::AllocArray { type_id });
     }
 
     fn compile_expr(&mut self, expr: &Expression) {
@@ -294,7 +305,7 @@ impl<'a> Compiler<'a> {
                     self.compile_expr(arg);
                 }
                 self.bytecode.push(Instruction::Call {
-                    function_label: self.routines_labels[callee],
+                    function_label: self.routine_meta[callee].entry,
                 });
             }
             Expression::BinOp { op, lhs, rhs } => match op {
@@ -304,7 +315,7 @@ impl<'a> Compiler<'a> {
                     self.bytecode.push(Instruction::Dup);
                     self.bytecode
                         .push(Instruction::JumpZero { label: end_label });
-                    self.bytecode.push(Instruction::Drop);
+                    self.bytecode.push(Instruction::Drop(1u16));
                     self.compile_expr(rhs);
                     self.bytecode.push(Instruction::Label { id: end_label });
                 }
@@ -314,7 +325,7 @@ impl<'a> Compiler<'a> {
                     self.bytecode.push(Instruction::Dup);
                     self.bytecode
                         .push(Instruction::JumpNotZero { label: end_label });
-                    self.bytecode.push(Instruction::Drop);
+                    self.bytecode.push(Instruction::Drop(1u16));
                     self.compile_expr(rhs);
                     self.bytecode.push(Instruction::Label { id: end_label });
                 }
@@ -367,8 +378,7 @@ impl<'a> Compiler<'a> {
         }
 
         // Discard local variables
-        self.bytecode
-            .push(Instruction::DropMany(block.locals_count));
+        self.bytecode.push(Instruction::Drop(block.locals_count));
     }
 
     #[expect(clippy::too_many_lines, reason = "giant switch")]
@@ -419,7 +429,7 @@ impl<'a> Compiler<'a> {
             }
             Statement::Expr(expression) => {
                 self.compile_expr(expression);
-                self.bytecode.push(Instruction::Drop);
+                self.bytecode.push(Instruction::Drop(1u16));
             }
             Statement::If {
                 condition,
@@ -510,7 +520,7 @@ impl<'a> Compiler<'a> {
                 self.bytecode
                     .push(Instruction::JumpNotZero { label: body_label });
 
-                self.bytecode.push(Instruction::Drop);
+                self.bytecode.push(Instruction::Drop(1u16));
             }
             Statement::ForEach {
                 counter,
@@ -606,7 +616,7 @@ impl<'a> Compiler<'a> {
                 self.bytecode
                     .push(Instruction::JumpNotZero { label: body_label });
 
-                self.bytecode.push(Instruction::DropMany(2));
+                self.bytecode.push(Instruction::Drop(2));
             }
             Statement::Print { value, t } => {
                 let type_id = self.get_type_representation(t);
@@ -643,9 +653,32 @@ impl<'a> Compiler<'a> {
 
     fn collect_routines(&mut self, program: &AST) {
         for binding in &program.globals {
-            if let Decl::Routine(_) = &binding.decl {
-                let fresh = self.get_fresh_label();
-                let _: Option<u64> = self.routines_labels.insert(binding.name.clone(), fresh);
+            if let Binding {
+                name,
+                decl: Decl::Routine(RoutineDecl::Full(Routine { signature, .. })),
+            } = &binding
+            {
+                let fresh_id = self.get_fresh_function_id();
+                let fresh_label = self.get_fresh_label();
+                let arg_type_ids: Vec<TypeId> = signature
+                    .args
+                    .iter()
+                    .map(|(_, t)| self.get_type_representation(t))
+                    .collect();
+                let return_type_id = self.get_type_representation(&signature.return_type);
+
+                let meta = RoutineMeta {
+                    id: fresh_id,
+                    entry: fresh_label,
+                    args: arg_type_ids,
+                    result: return_type_id,
+                };
+
+                let prev = self.routine_meta.insert(name.clone(), meta);
+                debug_assert!(
+                    prev.is_none(),
+                    "compiler bug: multiple bodies for routine {name}"
+                );
             }
         }
     }
@@ -683,29 +716,16 @@ impl<'a> Compiler<'a> {
                 }
                 Decl::Routine(r) => match r {
                     RoutineDecl::Forward { .. } => {}
-                    RoutineDecl::Full(Routine {
-                        body, signature, ..
-                    }) => {
-                        let label_id = *self
-                            .routines_labels
-                            .get(name)
-                            .expect("Routines are indexed");
-                        self.bytecode.push(Instruction::Label { id: label_id });
+                    RoutineDecl::Full(Routine { body, .. }) => {
+                        let routine_meta =
+                            self.routine_meta.get(name).expect("Routines are indexed");
 
-                        let arg_type_ids: Vec<TypeId> = signature
-                            .args
-                            .iter()
-                            .map(|(_, t)| self.get_type_representation(t))
-                            .collect();
-                        let return_type_id = self.get_type_representation(&signature.return_type);
-                        let prev = self
-                            .routine_meta
-                            .insert(label_id, (arg_type_ids, return_type_id));
-                        debug_assert_eq!(
-                            prev, None,
-                            "compiler bug: multiple bodies for label {label_id}"
-                        );
-
+                        self.bytecode.push(Instruction::Label {
+                            id: routine_meta.entry,
+                        });
+                        self.bytecode.push(Instruction::Begin {
+                            function_id: routine_meta.id,
+                        });
                         match body {
                             RoutineBody::Block(block) => {
                                 self.compile_block(block);
@@ -717,6 +737,7 @@ impl<'a> Compiler<'a> {
                                 self.bytecode.push(Instruction::Ret);
                             }
                         }
+                        self.bytecode.push(Instruction::Unreachable)
                     }
                 },
                 Decl::Const(_) | Decl::Type(_) => {}
@@ -753,39 +774,33 @@ impl From<Compiler<'_>> for Program {
             bytecode,
             global_init,
             fresh_label_counter: _,
-            routines_labels,
+            fresh_routine_counter: _,
             routine_meta,
             global_count,
         } = value;
         let mut code = global_init;
-        if let Some(&main_label) = routines_labels
+        if let Some(main_label) = routine_meta
             .iter()
             .find(|(ident, _)| ident.raw.name == "main")
-            .map(|(_, label)| label)
+            .map(|(_, info)| info.entry)
         {
             code.push(Instruction::Call {
                 function_label: main_label,
             });
-            code.push(Instruction::Drop);
+            code.push(Instruction::Drop(1u16));
         }
         code.push(Instruction::NullConst);
         code.push(Instruction::Ret);
 
         code.extend(bytecode);
         let function_table = FunctionTable(
-            routines_labels
+            routine_meta
                 .into_iter()
-                .map(|(name, label_id)| {
-                    let (args, result) = routine_meta
-                        .get(&label_id)
-                        .cloned()
-                        .unwrap_or_else(|| (Vec::new(), TypeId(0)));
-                    FunctionRecord {
-                        name: name.raw.name.clone(),
-                        label_id,
-                        args,
-                        result,
-                    }
+                .map(|(name, info)| FunctionRecord {
+                    name: name.raw.name.clone(),
+                    label_id: info.entry,
+                    args: info.args,
+                    result: info.result,
                 })
                 .collect(),
         );

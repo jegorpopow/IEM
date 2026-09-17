@@ -105,11 +105,16 @@ Program {
         Call {
             function_label: 6,
         },
-        Drop,
+        Drop(
+            1,
+        ),
         NullConst,
         Ret,
         Label {
             id: 1,
+        },
+        Begin {
+            function_id: 1,
         },
         IntConst {
             value: 1,
@@ -122,8 +127,12 @@ Program {
         ElementAddress,
         LoadAddress,
         Ret,
+        Unreachable,
         Label {
             id: 2,
+        },
+        Begin {
+            function_id: 2,
         },
         IntConst {
             value: 2,
@@ -136,13 +145,17 @@ Program {
         ElementAddress,
         LoadAddress,
         Ret,
-        DropMany(
+        Drop(
             0,
         ),
         NullConst,
         Ret,
+        Unreachable,
         Label {
             id: 3,
+        },
+        Begin {
+            function_id: 3,
         },
         NullConst,
         Load {
@@ -167,7 +180,7 @@ Program {
             line: 12,
             column: 1,
         },
-        DropMany(
+        Drop(
             0,
         ),
         Label {
@@ -201,7 +214,7 @@ Program {
             line: 15,
             column: 1,
         },
-        DropMany(
+        Drop(
             0,
         ),
         Label {
@@ -233,7 +246,7 @@ Program {
             line: 16,
             column: 1,
         },
-        DropMany(
+        Drop(
             0,
         ),
         Label {
@@ -275,7 +288,7 @@ Program {
             line: 19,
             column: 1,
         },
-        DropMany(
+        Drop(
             0,
         ),
         Label {
@@ -318,7 +331,7 @@ Program {
             line: 22,
             column: 1,
         },
-        DropMany(
+        Drop(
             0,
         ),
         Label {
@@ -327,7 +340,7 @@ Program {
         IntConst {
             value: 2,
         },
-        AllocArrayDynamic {
+        AllocArray {
             type_id: TypeId(
                 5,
             ),
@@ -393,7 +406,7 @@ Program {
             line: 28,
             column: 1,
         },
-        DropMany(
+        Drop(
             0,
         ),
         Label {
@@ -430,7 +443,7 @@ Program {
             line: 29,
             column: 1,
         },
-        DropMany(
+        Drop(
             0,
         ),
         Label {
@@ -465,7 +478,7 @@ Program {
             line: 31,
             column: 1,
         },
-        DropMany(
+        Drop(
             0,
         ),
         Label {
@@ -500,19 +513,23 @@ Program {
             line: 32,
             column: 1,
         },
-        DropMany(
+        Drop(
             0,
         ),
         Label {
             id: 15,
         },
-        DropMany(
+        Drop(
             3,
         ),
         NullConst,
         Ret,
+        Unreachable,
         Label {
             id: 4,
+        },
+        Begin {
+            function_id: 4,
         },
         Load {
             loc: Argument(
@@ -520,13 +537,17 @@ Program {
             ),
         },
         Ret,
-        DropMany(
+        Drop(
             0,
         ),
         NullConst,
         Ret,
+        Unreachable,
         Label {
             id: 5,
+        },
+        Begin {
+            function_id: 5,
         },
         NullConst,
         Load {
@@ -551,17 +572,19 @@ Program {
             line: 41,
             column: 1,
         },
-        DropMany(
+        Drop(
             0,
         ),
         Label {
             id: 16,
         },
+        IntConst {
+            value: 3,
+        },
         AllocArray {
             type_id: TypeId(
                 7,
             ),
-            size: 3,
         },
         Store {
             loc: Local(
@@ -590,7 +613,7 @@ Program {
             line: 44,
             column: 1,
         },
-        DropMany(
+        Drop(
             0,
         ),
         Label {
@@ -622,7 +645,7 @@ Program {
             line: 45,
             column: 1,
         },
-        DropMany(
+        Drop(
             0,
         ),
         Label {
@@ -633,11 +656,13 @@ Program {
                 0,
             ),
         },
+        IntConst {
+            value: 3,
+        },
         AllocArray {
             type_id: TypeId(
                 7,
             ),
-            size: 3,
         },
         BinOp {
             op: Eq(
@@ -655,7 +680,7 @@ Program {
             line: 46,
             column: 1,
         },
-        DropMany(
+        Drop(
             0,
         ),
         Label {
@@ -700,11 +725,13 @@ Program {
             value: 30,
         },
         StoreAddress,
+        IntConst {
+            value: 3,
+        },
         AllocArray {
             type_id: TypeId(
                 7,
             ),
-            size: 3,
         },
         Load {
             loc: Local(
@@ -732,7 +759,7 @@ Program {
             line: 55,
             column: 1,
         },
-        DropMany(
+        Drop(
             0,
         ),
         Label {
@@ -826,7 +853,7 @@ Program {
             line: 60,
             column: 1,
         },
-        DropMany(
+        Drop(
             0,
         ),
         Label {
@@ -868,7 +895,7 @@ Program {
             line: 61,
             column: 1,
         },
-        DropMany(
+        Drop(
             0,
         ),
         Label {
@@ -910,7 +937,7 @@ Program {
             line: 62,
             column: 1,
         },
-        DropMany(
+        Drop(
             0,
         ),
         Label {
@@ -952,7 +979,7 @@ Program {
             line: 63,
             column: 1,
         },
-        DropMany(
+        Drop(
             0,
         ),
         Label {
@@ -984,32 +1011,41 @@ Program {
             line: 64,
             column: 1,
         },
-        DropMany(
+        Drop(
             0,
         ),
         Label {
             id: 25,
         },
-        DropMany(
+        Drop(
             2,
         ),
         NullConst,
         Ret,
+        Unreachable,
         Label {
             id: 6,
+        },
+        Begin {
+            function_id: 6,
         },
         Call {
             function_label: 3,
         },
-        Drop,
+        Drop(
+            1,
+        ),
         Call {
             function_label: 5,
         },
-        Drop,
-        DropMany(
+        Drop(
+            1,
+        ),
+        Drop(
             0,
         ),
         NullConst,
         Ret,
+        Unreachable,
     ],
 }
